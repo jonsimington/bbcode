@@ -5,6 +5,8 @@ __version__ = '.'.join(str(i) for i in __version_info__)
 
 import re
 
+import urlparse
+
 # Adapted from http://daringfireball.net/2010/07/improved_regex_for_matching_urls
 # Changed to only support one level of parentheses, since it was failing catastrophically on some URLs.
 # See http://www.regular-expressions.info/catastrophic.html
