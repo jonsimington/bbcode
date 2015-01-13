@@ -139,6 +139,17 @@ class Parser (object):
         self.add_simple_formatter('quote', '<blockquote>%(value)s</blockquote>', strip=True, swallow_trailing_newline=True)
         self.add_simple_formatter('code', '<code>%(value)s</code>', render_embedded=False, transform_newlines=False, swallow_trailing_newline=True)
         self.add_simple_formatter('center', '<div style="text-align:center;">%(value)s</div>')
+
+        # youtube tag
+        def _get_yt_id(name, value, options, parent, context):
+            url_data = urlparse.urlparse(value)
+            query = urlparse.parse_qs(url_data.query)
+            yt_id = query["v"][0]
+            iframe_str = '<iframe width="560" height="315" src="//www.youtube.com/embed/{}" frameborder="0" allowfullscreen></iframe>'.format(yt_id)
+            return iframe_str
+        
+        self.add_formatter('youtube', _get_yt_id)
+
         def _render_color(name, value, options, parent, context):
             if 'color' in options:
                 color = options['color'].strip()
